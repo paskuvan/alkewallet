@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alke-Wallet - Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      padding: 20px;
+      background-color: #ffffff;
+    }
+
+    .login-container {
+      max-width: 400px;
+      margin: 60px auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-container">
+    <h2 class="text-center mb-4">Iniciar sesión</h2>
+
+    <div id="alert-container"></div>
+
+    <form id="loginForm">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email (Usuario)</label>
+        <input type="text" class="form-control" id="email" placeholder="admin" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="password" placeholder="1234" required>
+      </div>
+
+      <button type="submit" class="btn btn-success w-100">Iniciar sesión</button>
+    </form>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('#loginForm').submit(function (e) {
+        e.preventDefault();
+
+        const user = $('#email').val();
+        const pass = $('#password').val();
+
+        if (user === 'admin' && pass === '1234') {
+          if (!localStorage.getItem('walletBalance')) {
+            localStorage.setItem('walletBalance', 60000);
+            localStorage.setItem('walletTransactions', JSON.stringify([]));
+          }
+
+          const successAlert = '<div class="alert alert-success">¡Bienvenido! Cargando menú...</div>';
+
+          $('#alert-container').html(successAlert).hide().fadeIn();
+
+          setTimeout(function () {
+            window.location.href = 'menu.html';
+          }, 1000);
+
+        } else {
+          const errorAlert = '<div class="alert alert-danger">Credenciales incorrectas. Intenta de nuevo.</div>';
+
+          $('#alert-container').html(errorAlert).hide().fadeIn();
+
+          $('#email, #password').css('border', '1px solid red');
+        }
+      });
+
+      $('#email, #password').on('input', function () {
+        $(this).css('border', '1px solid purple');
+      });
+    });
+  </script>
+</body>
+
+</html>
