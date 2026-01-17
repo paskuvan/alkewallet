@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alke-Wallet - Menú Principal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      padding: 20px;
+      background-color: #ffffff;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Menú Principal</h2>
+      <a href="login.html" class="btn btn-outline-danger btn-sm">Salir</a>
+    </div>
+
+    <div class="card p-3 mb-4 bg-light shadow-sm">
+      <label class="text-muted">Saldo disponible:</label>
+      <h3 id="saldoDisplay" class="text-primary fw-bold">$ 0</h3>
+    </div>
+
+    <div id="info-message" class="text-center mb-3 text-success fw-bold" style="height: 24px; display: none;"></div>
+
+    <div class="d-grid gap-2">
+      <button id="btnDepositar" class="btn btn-primary btn-lg">Depositar</button>
+      <button id="btnEnviar" class="btn btn-primary btn-lg">Enviar Dinero</button>
+      <button id="btnMovimientos" class="btn btn-secondary">Últimos Movimientos</button>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      const saldo = localStorage.getItem('walletBalance') || 0;
+      $('#saldoDisplay').text('$ ' + saldo);
+
+      function navegarA(url, nombrePantalla) {
+        $('#info-message').text(`Redirigiendo a ${nombrePantalla}...`).fadeIn();
+        setTimeout(function () {
+          window.location.href = url;
+        }, 800);
+      }
+
+      $('#btnDepositar').click(function () {
+        navegarA('deposit.html', 'Depósitos');
+      });
+
+      $('#btnEnviar').click(function () {
+        navegarA('sendmoney.html', 'Enviar Dinero');
+      });
+
+      $('#btnMovimientos').click(function () {
+        navegarA('transactions.html', 'Movimientos');
+      });
+    });
+  </script>
+</body>
+
+</html>
